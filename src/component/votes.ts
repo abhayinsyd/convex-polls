@@ -23,6 +23,10 @@ export const castVote = mutation({
     }
 
     if (poll.config.closesAt && Date.now() > poll.config.closesAt) {
+      await ctx.db.patch(args.pollId, {
+        status: "closed",
+        closedAt: poll.config.closesAt,
+      });
       throw new Error(
         "This poll has expired and is no longer accepting votes.",
       );
@@ -31,7 +35,7 @@ export const castVote = mutation({
     const validOptionIds = poll.options.map((o) => o.id);
     if (!validOptionIds.includes(args.optionId)) {
       throw new Error(
-        `Invalid option "${args.optionId}". Valid options: ${validOptionIds.join(", ")}`,
+        "This option doesn't exist on this poll. It may have been removed.",
       );
     }
 
@@ -103,6 +107,14 @@ export const removeVote = mutation({
 
     if (poll.status === "closed") {
       throw new Error("Cannot remove votes from a closed poll.");
+    }
+
+    if (poll.config.closesAt && Date.now() > poll.config.closesAt) {
+      await ctx.db.patch(args.pollId, {
+        status: "closed",
+        closedAt: poll.config.closesAt,
+      });
+      throw new Error("This poll has expired. Votes can no longer be changed.");
     }
 
     const votes = await ctx.db

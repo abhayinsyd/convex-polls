@@ -1,0 +1,216 @@
+/* === Custom Properties === */
+:root {
+  --bg: #0A0A0B;
+  --surface: #18181B;
+  --surface-hover: #1F1F23;
+  --surface-border: rgba(255, 255, 255, 0.08);
+  --accent-orange: #FF8A14;
+  --accent-lime: #B8D623;
+  --accent-pink: #FF628A;
+  --text-primary: #FAFAF9;
+  --text-description: #A1A1AA;
+  --text-option: #E4E4E7;
+  --text-vote-count: #D4D4D8;
+  --text-secondary: #71717A;
+  --text-muted: #52525B;
+}
+
+/* === Scrollbar === */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* === Inputs === */
+.input-dark {
+  background: #09090B;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  transition: all 0.15s ease;
+}
+.input-dark::placeholder {
+  color: var(--text-muted);
+}
+.input-dark:focus {
+  border-color: rgba(255, 138, 20, 0.5);
+  box-shadow: 0 0 0 2px rgba(255, 138, 20, 0.3);
+}
+
+/* === Toggle Switch === */
+.toggle-switch {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  background: #27272A;
+  border-radius: 11px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+.toggle-switch.active {
+  background: var(--accent-orange);
+}
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: var(--text-primary);
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+.toggle-switch.active::after {
+  transform: translateX(18px);
+}
+
+/* === Vote Bar === */
+.vote-bar {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 138, 20, 0.20);
+}
+.vote-bar-unvoted {
+  background: rgba(255, 255, 255, 0.05);
+}
+.vote-bar-closed {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* === Shimmer Skeleton === */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface) 25%,
+    var(--surface-hover) 50%,
+    var(--surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* === Button Base === */
+.btn-primary {
+  width: 100%;
+  padding: 12px 20px;
+  background: var(--accent-orange);
+  color: #fff;
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+.btn-primary:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* === Card === */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  transition: border-color 0.15s ease;
+}
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* === Option Row === */
+.option-row {
+  position: relative;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--surface-border);
+  background: transparent;
+  color: var(--text-primary);
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  overflow: hidden;
+}
+.option-row:hover:not(:disabled) {
+  background: var(--surface-hover);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.option-row:disabled {
+  cursor: default;
+}
+.option-row.selected {
+  border-left: 3px solid var(--accent-orange);
+}
+
+/* === Animations === */
+.poll-card-enter {
+  animation: fade-in-up 0.4s ease-out both;
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* === Number flash on vote count change === */
+.vote-count-flash {
+  animation: vote-flash 0.6s ease-out;
+}
+
+@keyframes vote-flash {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; color: var(--accent-orange); }
+  100% { opacity: 1; }
+}
+
+/* === Toast === */
+.toast-enter {
+  animation: slide-in 0.3s ease-out;
+}
+
+@keyframes slide-in {
+  0% { transform: translateX(100%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .layout-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

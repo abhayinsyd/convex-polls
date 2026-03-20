@@ -3,24 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Convex Polls Demo</title>
+    <title>convex-polls — Real-time Polls &amp; Voting</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
+            fontFamily: {
+              heading: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+              body: ['"DM Sans"', 'system-ui', 'sans-serif'],
+              mono: ['"DM Mono"', 'ui-monospace', 'monospace'],
+            },
             colors: {
-              poll: {
-                50: '#f0f4ff',
-                100: '#dbe4ff',
-                200: '#bac8ff',
-                300: '#91a7ff',
-                400: '#748ffc',
-                500: '#5c7cfa',
-                600: '#4c6ef5',
-                700: '#4263eb',
-                800: '#3b5bdb',
-                900: '#364fc7',
+              surface: {
+                DEFAULT: '#18181B',
+                hover: '#1F1F23',
+                border: 'rgba(255,255,255,0.08)',
+              },
+              accent: {
+                orange: '#FF8A14',
+                lime: '#B8D623',
+                pink: '#FF628A',
+              },
+              txt: {
+                primary: '#FAFAF9',
+                secondary: '#71717A',
+                muted: '#52525B',
               },
             },
             keyframes: {
@@ -32,17 +43,38 @@
                 '0%, 100%': { opacity: '1' },
                 '50%': { opacity: '0.4' },
               },
+              'fade-in-up': {
+                '0%': { opacity: '0', transform: 'translateY(12px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              'shimmer': {
+                '0%': { backgroundPosition: '-200% 0' },
+                '100%': { backgroundPosition: '200% 0' },
+              },
+              'vote-flash': {
+                '0%': { opacity: '1' },
+                '50%': { opacity: '0.5', color: '#FF8A14' },
+                '100%': { opacity: '1' },
+              },
+              'waiting-pulse': {
+                '0%, 100%': { opacity: '0.3' },
+                '50%': { opacity: '0.8' },
+              },
             },
             animation: {
               'slide-in': 'slide-in 0.3s ease-out',
               'pulse-dot': 'pulse-dot 2s ease-in-out infinite',
+              'fade-in-up': 'fade-in-up 0.4s ease-out both',
+              'shimmer': 'shimmer 2s linear infinite',
+              'vote-flash': 'vote-flash 0.6s ease-out',
+              'waiting-pulse': 'waiting-pulse 2.5s ease-in-out infinite',
             },
           },
         },
       }
     </script>
   </head>
-  <body class="bg-gray-50 min-h-screen">
+  <body class="min-h-screen font-body" style="background-color: #0A0A0B; color: #FAFAF9;">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
